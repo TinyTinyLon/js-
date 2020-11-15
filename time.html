@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title></title>
+		<style type="text/css">
+			.container{
+				width: 500px;
+				height: 500px;
+				/*background-color: lavenderblush;*/
+				margin: 0 auto;
+				position: relative;
+			}
+			
+			#point{
+				width: 95px;
+				height: 1px;
+				background-color: black;
+				border-radius: 10%;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				/*transform: rotate(-90deg);  让指针指向0*/ 
+				transform-origin:0 0; /*设置旋转中心，左端为旋转中心*/
+				z-index: 1;
+			}
+			
+			#fenzheng{
+				width: 85px;
+				height: 3px;
+				border-radius: 10%;
+				background-color: black;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: rotate(-90deg);
+				
+				transform-origin:0 0;
+				z-index: 1;
+			}
+			
+			#hourpoint{
+				width: 65px;
+				height: 3px;
+				border-radius: 10%;
+				background-color: black;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: rotate(-90deg);
+				transform-origin:0 0;
+				z-index: 1;
+			}
+			
+			#pic{
+				position: absolute;
+				left: 20%;
+				top: 20%;
+				z-index: 0;
+			}
+			
+			#time{
+				color: #888888;
+				font-size: 20px;
+				padding-left: 60%;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<!--制作时钟-->
+		<div class="container">
+			
+			<span id="time">123</span>
+			<!--秒针-->
+			<div id="point">
+				
+			</div>
+			<!--分针-->
+			<div id="fenzheng">
+				
+			</div>
+			
+			<div id="hourpoint">
+				
+			</div>
+			
+			<div id="pic">
+				<img src="img/time.jpg" width="300px" height="300px"/>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+			
+			// 显示时间
+			function startClock(){
+				var time = document.getElementById("time");
+	//			console.log(time.innerHTML)
+				var current = new Date();
+				var year = current.getFullYear();
+				var month = current.getMonth() + 1;
+				var da = current.getDate();
+				var hours = current.getHours();
+				var minutes = current.getMinutes();
+				var seconds = current.getSeconds();
+				
+				var timeStr =year + "/" + month + "/" + da + "  " + hours + ":" + minutes + ":" + seconds;
+				time.innerHTML = timeStr;
+				setTimeout(startClock,1000);
+			}
+			startClock();
+	</script>
+	<script type="text/javascript">
+	
+		var i = 0; // 控制秒针
+		var j = 0; // 控制分针
+		var k = 0; // 控制分针
+		var cdate = new Date();
+
+		// 设置秒针的当前指向位置
+		i = cdate.getSeconds();
+		var point = document.getElementById("point");
+		point.style.transform = 'rotate('+ (i*6 - 90)  +'deg)'
+		
+		setInterval(function(){
+			var i = new Date().getSeconds();
+			var point = document.getElementById("point");
+			point.style.transform = 'rotate('+ (i*6 - 90)  +'deg)'
+		},1000)
+		
+		
+		// 设置分针，当前位置的志向位置
+		j = cdate.getMinutes();
+		var fenzheng = document.getElementById("fenzheng");
+		fenzheng.style.transform = 'rotate('+ (j*6 -90) +'deg)';
+		
+		setInterval(function(){
+			j = new Date().getMinutes();
+			fenzheng.style.transform = 'rotate('+ (j*6 -90) +'deg)';
+			
+		},1000*60)
+		
+		
+		// 设置时针的指向
+		k = cdate.getHours();
+		var hourpoint = document.getElementById("hourpoint");
+		hourpoint.style.transform = 'rotate('+ (k*30-90 + j * 0.5) +'deg)';
+		
+		setInterval(function(){
+			k = new Date().getHours();
+			j = new Date().getMinutes();
+			hourpoint.style.transform = 'rotate('+ (k*30-90 + j * 0.5) +'deg)';
+			
+		},1000*60)
+	</script>
+</html>
